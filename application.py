@@ -14,13 +14,8 @@ class SearchForm(Form):
     type = SelectField('Type', choices=[('Type 1', 'Type 1'), ('Type 2', 'Type 2')])
 
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/')
 def home():
-    form = SearchForm(request.form)
-    if request.method == 'POST' and form.validate():
-        content = form.content.data
-        c_type = form.type.data
-        return redirect(url_for('search', content=content, c_type=c_type))
     return render_template('home.html')
 
 
@@ -30,11 +25,12 @@ def search():
     if request.method == 'POST' and form.validate():
         content = form.content.data
         c_type = form.type.data
-        return content + c_type
+        search_result = []
+        return render_template('search.html', content=content, c_type=c_type, search_result=search_result)
 
 
-@app.route('/result')
-def result():
+@app.route('/result/<int:result_id>')
+def result(result_id):
     return render_template('result.html')
 
 
