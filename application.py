@@ -1,6 +1,6 @@
 from flask import Flask, render_template, flash, redirect, url_for, sessions, request
 from wtforms import Form, StringField, validators, ValidationError, SelectField
-
+import  algorithm
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '123456'
@@ -25,7 +25,11 @@ def search():
     if request.method == 'POST' and form.validate():
         content = form.content.data
         c_type = form.type.data
-        search_result = []
+        """
+        将查询的词传入算法，然后返回查询结果。查询结果应当使用SQL或者字典以加快运行速度
+        如果涉及到属性，应定义一个类，规范化检索过程
+        """
+        search_result = algorithm.tf_idf(content)
         return render_template('search.html', content=content, c_type=c_type, search_result=search_result)
 
 
@@ -36,3 +40,5 @@ def result(result_id):
 
 if __name__ == '__main__':
     app.run(debug=True)
+
+

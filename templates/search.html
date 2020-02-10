@@ -14,10 +14,7 @@
         </tr>
         {% for result in search_result %}
             <tr>
-                <td>{{result.title}}</td>
-                <td>{{result.type}}</td>
-                <td>{{result.author}}</td>
-                <td>${{result.content}}</td>
+                <td>{{result}}</td>
                 <td><a href="result/{{result.id}}" class="btn btn-primary pull-right">View</a></td>
             </tr>
         {% endfor %}
