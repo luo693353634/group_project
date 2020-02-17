@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>searchResult</title>
+<!--    <meta name="viewreport" content="width=device-width", intial-scale=1>-->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/bootstrap-select/1.12.4/css/bootstrap-select.min.css" rel="stylesheet">
+    <style>
+        body{
+        background: #202a3f;
+        height: 1024px;
+        }
+        .btn btn-feedback{
+        background: url(delete.png) no-repeat;
+        display: block;
+        cursor: pointer;
+        }
+        .hover1{
+        background: rgb(200, 200, 200);
+        display:inline-block;
+        width: 220px;
+        height: 300px;
+        margin-bottom: auto;
+        margin-top: 300px;
+        margin-left: auto;
+        margin-right: auto;
+        float: center;
+        }
+        p{
+        text-align: center;
+        }
+    </style>
+</head>
+<body>
+<div class="total" style="height: 1024px;">
+    <center>
+        <div class="hover1">
+        <form id="form1">
+            <div class="input-group">
+                <div id="first-btn-region" style="margin-top:auto; margin-bottom:auto;">
+            <p>Region</p>
+            <div class="form-group">
+                <div class="btn-group bootstrap-select show-tick">
+<!--                    <button type="button" class="btn dropdown-toggle bs-placeholder btn-default" data-toggle="dropdown" role="button" title="请选择一项">-->
+<!--                        <span class="filter-option pull-left">choose</span>&nbsp;<span class="bs-caret"><span class="caret"></span></span>-->
+<!--                    </button>-->
+<!--                    <div class="dropdown-menu open" role="combobox">-->
+<!--                        <div class="bs-searchbox">-->
+<!--                            <input type="text" class="form-control" autocomplete="off" role="textbox" aria-label="Search">-->
+<!--                        </div>-->
+<!--                        <ul class="dropdown-menu inner" role="listbox" aria-expanded="false">-->
+<!--                            <li data-original-index="0"><a tabindex="0" class="" data-tokens="null" role="option" aria-disabled="false" aria-selected="false"><span class="text">A</span><span class="glyphicon glyphicon-ok check-mark"></span></a></li>-->
+<!--                            <li data-original-index="1"><a tabindex="0" class="" data-tokens="null" role="option" aria-disabled="false" aria-selected="false"><span class="text">B</span><span class="glyphicon glyphicon-ok check-mark"></span></a></li>-->
+<!--                            <li data-original-index="2"><a tabindex="0" class="" data-tokens="null" role="option" aria-disabled="false" aria-selected="false"><span class="text">C</span><span class="glyphicon glyphicon-ok check-mark"></span></a></li>-->
+<!--                            <li data-original-index="3"><a tabindex="0" class="" data-tokens="null" role="option" aria-disabled="false" aria-selected="false"><span class="text">D</span><span class="glyphicon glyphicon-ok check-mark"></span></a></li>-->
+<!--                            <li data-original-index="4"><a tabindex="0" class="" data-tokens="null" role="option" aria-disabled="false" aria-selected="false"><span class="text">E</span><span class="glyphicon glyphicon-ok check-mark"></span></a></li>-->
+<!--                            <li data-original-index="5"><a tabindex="0" class="" data-tokens="null" role="option" aria-disabled="false" aria-selected="false"><span class="text">B</span><span class="glyphicon glyphicon-ok check-mark"></span></a></li>-->
+<!--                            <li data-original-index="6"><a tabindex="0" class="" data-tokens="null" role="option" aria-disabled="false" aria-selected="false"><span class="text">C</span><span class="glyphicon glyphicon-ok check-mark"></span></a></li>-->
+<!--                        </ul>-->
+<!--                    </div>-->
+                    <select class="selectpicker" title="choose" data-live-search="true" data-size="5" multiple="" data-max-options="5" tabindex="-98">
+                    <option>EU</option>
+                    <option>NA</option>
+                    <option>SEA</option>
+                    <option>KR</option>
+                    <option>JP</option>
+                </select></div>
+            </div>
+        </div>
+                <div id="sec-btn-type" style="margin-top:auto; margin-bottom:auto;">
+            <p>Type</p>
+            <div class="form-group">
+                <div class="btn-group bootstrap-select show-tick">
+                    <!--                    <button type="button" class="btn dropdown-toggle bs-placeholder btn-default" data-toggle="dropdown" role="button" title="请选择一项">-->
+                    <!--                        <span class="filter-option pull-left">choose</span>&nbsp;<span class="bs-caret"><span class="caret"></span></span>-->
+                    <!--                    </button>-->
+                    <!--                    <div class="dropdown-menu open" role="combobox">-->
+                    <!--                        <div class="bs-searchbox">-->
+                    <!--                            <input type="text" class="form-control" autocomplete="off" role="textbox" aria-label="Search">-->
+                    <!--                        </div>-->
+                    <!--                        <ul class="dropdown-menu inner" role="listbox" aria-expanded="false">-->
+                    <!--                            <li data-original-index="0"><a tabindex="0" class="" data-tokens="null" role="option" aria-disabled="false" aria-selected="false"><span class="text">A</span><span class="glyphicon glyphicon-ok check-mark"></span></a></li>-->
+                    <!--                            <li data-original-index="1"><a tabindex="0" class="" data-tokens="null" role="option" aria-disabled="false" aria-selected="false"><span class="text">B</span><span class="glyphicon glyphicon-ok check-mark"></span></a></li>-->
+                    <!--                            <li data-original-index="2"><a tabindex="0" class="" data-tokens="null" role="option" aria-disabled="false" aria-selected="false"><span class="text">C</span><span class="glyphicon glyphicon-ok check-mark"></span></a></li>-->
+                    <!--                            <li data-original-index="3"><a tabindex="0" class="" data-tokens="null" role="option" aria-disabled="false" aria-selected="false"><span class="text">D</span><span class="glyphicon glyphicon-ok check-mark"></span></a></li>-->
+                    <!--                            <li data-original-index="4"><a tabindex="0" class="" data-tokens="null" role="option" aria-disabled="false" aria-selected="false"><span class="text">E</span><span class="glyphicon glyphicon-ok check-mark"></span></a></li>-->
+                    <!--                            <li data-original-index="5"><a tabindex="0" class="" data-tokens="null" role="option" aria-disabled="false" aria-selected="false"><span class="text">B</span><span class="glyphicon glyphicon-ok check-mark"></span></a></li>-->
+                    <!--                            <li data-original-index="6"><a tabindex="0" class="" data-tokens="null" role="option" aria-disabled="false" aria-selected="false"><span class="text">C</span><span class="glyphicon glyphicon-ok check-mark"></span></a></li>-->
+                    <!--                        </ul>-->
+                    <!--                    </div>-->
+                    <select class="selectpicker" title="choose" data-live-search="true" data-size="5" multiple="" data-max-options="5" tabindex="-98">
+                        <option>Popular</option>
+                        <option>Cantonese</option>
+                        <option>Country</option>
+                        <option>Hip-Hop</option>
+                        <option>Chinese Poem</option>
+                    </select></div>
+            </div>
+        </div>
+                <div id="third-btn-singer" style="margin-top:auto; margin-bottom:auto;">
+                    <p>Singer</p>
+                    <form>
+                    <div class="input-group input-group-sm">
+                        <input type="text" data-pure-clear-button class="form-control" placeholder="Type a singer name" name="search" style="display: inline-block; width: 187px; height: 34px; vertical-align: top;">
+                        <div class="input-group-btn">
+                            <button class="btn btn-default btn-lg" type="reset" style="display: inline-block; height: 34px; vertical-align: top;">
+                                <span class="glyphicon glyphicon-remove"></span>
+                            </button>
+                        </div>
+                    </div>
+            </form>
+                </div>
+                <br />
+                <center>
+                    <button class="btn btn-default btn-lg" type="submit" form="form1">
+                        <span class="glyphicon glyphicon-search"></span>
+                    </button>
+                </center>
+            </div>
+
+        </form>
+
+    </div>
+        <div class="container" style="display:inline-block; vertical-align: top; width:1050px; height: 1024px; margin-top: 0px; margin-left: auto; margin-right: auto;">
+        <div class="widget image_view" style="width: 380.25px; height: 111px; margin-left: auto; margin-right: auto; margin-top: 50px; z-index: 37; border-color: rgb(187, 187, 187); border-width: 0px; border-style: solid; font-weight: normal; font-style: normal; opacity: 1;">
+            <div class="image-wrapper undefined">
+            <span style="display: none; background-color: rgb(229, 229, 229);">
+                <svg xmlns="http://www.w3.org/2000/svg" class="svg-icon icon" viewBox="0 0 24 22" aria-hidden="true" style="width: 24px; height: 22px;">
+                    <path d="M2.273.1h17.454c1.205 0 2.182.977 2.182 2.182v15.436a2.182 2.182 0 0 1-2.182 2.182H2.273A2.182 2.182 0 0 1 .09 17.718V2.282C.09 1.077 1.068.1 2.273.1zm0 3.29v13.22c0 .602.488 1.09 1.09 1.09h15.273a1.09 1.09 0 0 0 1.091-1.09V3.39a1.09 1.09 0 0 0-1.09-1.09H3.363a1.09 1.09 0 0 0-1.091 1.09zm1.09 12.172V14.4l2.905-2.928a1.09 1.09 0 0 1 1.664.137l1.108 1.565a1.09 1.09 0 0 0 1.766.02l3.023-4.064a1.09 1.09 0 0 1 1.82.105l2.987 5.165v1.113c0 .601-.486 1.089-1.086 1.091l-13.091.05a1.09 1.09 0 0 1-1.095-1.092zM7.183 7.8a1.643 1.643 0 0 1-1.637-1.65c0-.911.733-1.65 1.637-1.65s1.636.739 1.636 1.65c0 .911-.732 1.65-1.636 1.65z" fill="#8D9EA7" fill-rule="evenodd">
+                    </path>
+                </svg>
+            </span>
+                <div class="wrapper">
+                    <img src="search.png" draggable="false" style="display: block; width: 380.25px; height: 111px; margin-bottom: auto; margin-left: auto; margin-right: auto;">
+                </div>
+            </div>
+            <div class="region gesture " style="display: none;"></div>
+        </div>
+        <div class="widget rounded_rect hcenter vmiddle" style="display: inline-block; width: 1050px; height: 1160px; left: 190px; top: 100px; margin-top: 0px; z-index: 5; background-color: rgb(200, 200, 200); border-color: rgb(187, 187, 187); border-width: 1px; border-style: solid; font-size: 14px; padding: 0px; text-align: center; line-height: 20px; font-weight: normal; font-style: normal; opacity: 1;">
+            <div class="sContainer" style="position: block; margin-left: auto; margin-right: auto; width: 1050px; height: 60px; left: 0px; top: 0px;">
+                <form>
+                    <div class="input-group input-group-lg">
+                        <input type="text" data-pure-clear-button class="form-control" placeholder="Try Song Name, Singer and lyrics" name="search">
+                        <div class="input-group-btn">
+                            <button class="btn btn-default btn-lg" type="reset">
+                                <span class="glyphicon glyphicon-remove"></span>
+                            </button>
+                            <button class="btn btn-default" type="submit">
+                                <span class="glyphicon glyphicon-search"></span>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="widget lr" style="width: 1050px; height: 100px; left: 220px; top: 175px; z-index: 6; font-weight: normal; font-style: normal;">
+                <span></span>
+                <div class="region gesture " style="display: none;"></div>
+            </div>
+            <div class="widget lr" style="width: 1050px; height: 100px; left: 220px; top: 175px; z-index: 6; font-weight: normal; font-style: normal;">
+                <span></span>
+                <div class="region gesture " style="display: none;"></div>
+            </div>
+            <div class="widget lr" style="width: 1050px; height: 100px; left: 220px; top: 175px; z-index: 6; font-weight: normal; font-style: normal;">
+                <span></span>
+                <div class="region gesture " style="display: none;"></div>
+            </div>
+            <div class="widget lr" style="width: 1050px; height: 100px; left: 220px; top: 175px; z-index: 6; font-weight: normal; font-style: normal;">
+                <span></span>
+                <div class="region gesture " style="display: none;"></div>
+            </div>
+            <div class="widget lr" style="width: 1050px; height: 100px; left: 220px; top: 175px; z-index: 6; font-weight: normal; font-style: normal;">
+                <span></span>
+                <div class="region gesture " style="display: none;"></div>
+            </div>
+            <div class="widget lr" style="width: 1050px; height: 100px; left: 220px; top: 175px; z-index: 6; font-weight: normal; font-style: normal;">
+                <span></span>
+                <div class="region gesture " style="display: none;"></div>
+            </div>
+            <div class="widget lr" style="width: 1050px; height: 100px; left: 220px; top: 175px; z-index: 6; font-weight: normal; font-style: normal;">
+                <span></span>
+                <div class="region gesture " style="display: none;"></div>
+            </div>
+            <div class="widget lr" style="width: 1050px; height: 100px; left: 220px; top: 175px; z-index: 6; font-weight: normal; font-style: normal;">
+                <span></span>
+                <div class="region gesture " style="display: none;"></div>
+            </div>
+            <div class="widget lr" style="width: 1050px; height: 100px; left: 220px; top: 175px; z-index: 6; font-weight: normal; font-style: normal;">
+                <span></span>
+                <div class="region gesture " style="display: none;"></div>
+            </div>
+            <div class="widget lr" style="width: 1050px; height: 100px; left: 220px; top: 175px; z-index: 6; font-weight: normal; font-style: normal;">
+                <span></span>
+                <div class="region gesture " style="display: none;"></div>
+            </div>
+            <div style="display: block; margin-bottom: 10px;">
+                <!--            <div class="widget rounded_rect hcenter vmiddle" style="display: inline-block; margin-bottom: 0px; width: 41px; height: 36px; left: 838px; top: 905px; z-index: 7; background-color: rgb(240, 242, 245); border-color: rgba(255, 0, 0, 0); border-width: 0px; border-style: solid; border-radius: 2px; font-size: 14px; padding: 0px; text-align: center; line-height: 20px; font-weight: normal; font-style: normal; opacity: 1;"><div class="text" style="padding: 0px;"><p>&nbsp;</p></div><div class="region gesture " style="display: none;"></div></div>-->
+                <!--            <div class="widget rounded_rect hcenter vmiddle" style="display: inline-block; margin-bottom: 0px; width: 41px; height: 36px; left: 838px; top: 905px; z-index: 7; background-color: rgb(240, 242, 245); border-color: rgba(255, 0, 0, 0); border-width: 0px; border-style: solid; border-radius: 2px; font-size: 14px; padding: 0px; text-align: center; line-height: 20px; font-weight: normal; font-style: normal; opacity: 1;"><div class="text" style="padding: 0px;"><p>&nbsp;</p></div><div class="region gesture " style="display: none;"></div></div>-->
+                <nav aria-label="Page navigation">
+                    <ul class="pagination pagination-lg">
+                        <li class="disabled">
+      <span aria-label="Previous">
+        <span aria-hidden="true">&laquo; Previous Page</span>
+      </span>
+                        </li>
+                        <li class="active"><span>1</span></li>
+                        <li><a href="#">2</a></li>
+                        <li><a href="#">3</a></li>
+                        <li><a href="#">4</a></li>
+                        <li><a href="#">5</a></li>
+                        <li>
+                            <a href="#" aria-label="Next">
+                                <span aria-hidden="true">Next Page &raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="region gesture " style="display: none;"></div>
+        </div>
+    </div>
+    </center>
+
+</div>
+<script src="https://cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script src="https://cdn.bootcss.com/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
+<script src="https://cdn.bootcss.com/bootstrap-select/1.12.4/js/i18n/defaults-zh_CN.min.js"></script>
+</body>
+</html>
