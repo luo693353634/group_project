@@ -1,0 +1,22 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+    <h1>Search Result <small> Welcome {{session.nickname}}</small></h1>
+    <h3>You just search {{ content }} with type {{ c_type }}</h3>
+    <hr>
+    <table class="table table-striped">
+        <tr>
+            <th>Title</th>
+            <th>Classification</th>
+            <th>Author</th>
+            <th>Content</th>
+            <th></th>
+        </tr>
+        {% for result in search_result %}
+            <tr>
+                <td>{{result}}</td>
+                <td><a href="result/{{result.id}}" class="btn btn-primary pull-right">View</a></td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
