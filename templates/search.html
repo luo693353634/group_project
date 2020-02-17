@@ -1,0 +1,28 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+    <h1>Search Result <small> Welcome {{session.nickname}}</small></h1>
+    <h3>You just search {{ content }} with type {{ c_type }}</h3>
+    <hr>
+    <table class="table table-striped">
+        <tr>
+            <th>题目</th>
+            <th>朝代</th>
+            <th>作者</th>
+            <th>内容</th>
+            <th></th>
+        </tr>
+        {% for result in search_result %}
+
+            <tr>
+                <td>{{result['title']}}</td>
+                <td>{{result['dynasty']}}</td>
+                <td>{{result['author']}}</td>
+                <td>{{result['content'][:100]}}</td>
+<!--                <td>{{result}}</td>-->
+<!--                <td><a href="result/{{result['song_id']}}" class="btn btn-primary pull-right">View</a></td>-->
+                <td><a href="result/{{result['doc_id']}}" class="btn btn-primary pull-right">View</a></td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
