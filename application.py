@@ -3,7 +3,6 @@ from wtforms import Form, StringField, validators, ValidationError, SelectField
 from flask_pymongo import PyMongo
 from search import *
 from flask_paginate import Pagination, get_page_args
-import algorithm
 
 MODE = mode['product']  # test or product
 list_res = []
