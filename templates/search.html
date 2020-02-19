@@ -23,7 +23,7 @@
 
                 <tr>
                     <td>{{ loop.index + (page - 1) * per_page }}</td>
-                    {% if 'title' in result %}
+                    {% if 'title' in result  %}
                         <td>{{result['title']}}</td>
                         <td>{{result['dynasty']}}</td>
                         <td>{{result['author']}}</td>
