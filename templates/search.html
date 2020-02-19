@@ -2,27 +2,47 @@
 
 {% block body %}
     <h1>Search Result <small> Welcome {{session.nickname}}</small></h1>
-    <h3>You just search {{ content }} with type {{ c_type }}</h3>
+    <h3>You just search {{ content }}.</h3>
     <hr>
-    <table class="table table-striped">
+
+<div class="container">
+    {{ pagination.links }}
+<div class="table-responsive">
+    <table class="table table-striped table-hover">
+
         <tr>
+            <th>序号</th>
             <th>题目</th>
             <th>朝代</th>
             <th>作者</th>
             <th>内容</th>
             <th></th>
         </tr>
-        {% for result in search_result %}
+          <tbody>
+            {% for result in users %}
 
-            <tr>
-                <td>{{result['title']}}</td>
-                <td>{{result['dynasty']}}</td>
-                <td>{{result['author']}}</td>
-                <td>{{result['content'][:100]}}</td>
-<!--                <td>{{result}}</td>-->
-<!--                <td><a href="result/{{result['song_id']}}" class="btn btn-primary pull-right">View</a></td>-->
-                <td><a href="result/{{result['doc_id']}}" class="btn btn-primary pull-right">View</a></td>
-            </tr>
-        {% endfor %}
+                <tr>
+                    <td>{{ loop.index + (page - 1) * per_page }}</td>
+                    {% if 'title' in result %}
+                        <td>{{result['title']}}</td>
+                        <td>{{result['dynasty']}}</td>
+                        <td>{{result['author']}}</td>
+                        <td>{{result['content'][:100]}}</td>
+                    {% endif %}
+                    {% if 'song_name' in result %}
+                        <td>{{result['song_name']}}</td>
+                        <td>{{result['album_name']}}</td>
+                        <td>{{result['artist_name']}}</td>
+                        <td>{{result['lyric'][:100]}}</td>
+
+                    {% endif %}
+>
+                    <td><a href="result/{{result['_id']}}" class="btn btn-primary pull-right">View</a></td>
+                </tr>
+            {% endfor %}
+          </tbody>
     </table>
+    </div>
+    {{ pagination.links }}
+</div>
 {% endblock %}
