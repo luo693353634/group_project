@@ -55,11 +55,15 @@ def build_chunk_poem(df, terms_info, tokenid, token2id, tid_p):
             continue
         content = re.sub(r'\[[0-9]{2}:[0-9]{2}\.[0-9]{2,}]', '', content)
         content = re.sub(r'[0-9\s+\.\!\/_,$%^*()?;；：:-【】+\"\']+|[+——！，;：:。？、~@#￥%……&*（）]+', ' ', content)
-        tmp = content
-        content = jieba.lcut_for_search(content)
-        content = stopping(content)
-        for word in tmp:  # 添加单字分词逻辑
-            content.append(word)
+        tmp = []
+        for cha in content.strip():
+            tmp.append(cha)
+        content = tmp
+        # tmp = content
+        # content = jieba.lcut_for_search(content)
+        # content = stopping(content)
+        # for word in tmp:  # 添加单字分词逻辑
+        #     content.append(word)
 
         if flag:
             print(content)
