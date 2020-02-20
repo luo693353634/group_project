@@ -129,7 +129,6 @@ def build_index(mode):
     tokenid = 1
     token2id = dict()
     terms_info = dict()
-
     resourece_pathes = os.listdir(file_dictionary)
     for i, item in enumerate(resourece_pathes):
         print(i, item)
@@ -139,6 +138,9 @@ def build_index(mode):
             terms_info, tokenid, token2id = build_chunk_lyrics(reader, terms_info, tokenid, token2id, tid_p)
         elif item[0] == 'p':
             terms_info, tokenid, token2id = build_chunk_poem(reader, terms_info, tokenid, token2id, tid_p)
+    write_pickle(terms_info, pickle_index_p[MODE])
+    write_index_for_view(terms_info, txt_index_p[MODE])
+    print('finall is {}, write finished'.format(i))
     return terms_info
 
 
@@ -188,10 +190,8 @@ if __name__ == '__main__':
     MODE = mode['product']  # test or product
     #add_docno_all(MODE)
     terms_info = build_index(MODE)
-    write_pickle(terms_info, pickle_index_p[MODE])
-    write_index_for_view(terms_info, txt_index_p[MODE])
     write_tokensid_vb(MODE)
-
+    print('building index finished')
 
     # df = open(pickle_index_p[MODE], 'rb')  # 注意此处是rb
     # # 此处使用的是load(目标文件)

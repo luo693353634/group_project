@@ -171,16 +171,16 @@ def search(query, phrase, index, tokens_id):
 
 
 if __name__ == '__main__':
-    MODE = mode['product']  # test or product
+    MODE = mode['test']  # test or product
 
     index_for_search = load_pickle(pickle_index_p[MODE])  # load index
     tokens_id = load_pickle(tokens_id_vb_p[MODE])
 
     query1 = '北京\'花草\''
-    query2 = '北京'
-    query3 = '我爱北京天安门'
+    query2 = '天安门'
+    query3 = '郑楠'
     query4 = '花儿\'太阳当空照\''
-    query, phrase = preprocess_query(query1)
+    query, phrase = preprocess_query(query3)
     res = search(query, phrase, index_for_search, tokens_id)  # get boolean search result
     print('result:')
     if len(res) > 20:
