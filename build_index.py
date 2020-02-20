@@ -9,7 +9,7 @@ def build_chunk_lyrics(reader, terms_info, tokenid, token2id, tid_p):
     tid_out = open(tid_p, 'a')
     flag = 1
     for doc in reader:
-        docno = doc['doc_id']
+        docno = doc['_id']
         vb_docno = encode_vbyte(docno)
 
         content = doc['lyric']
@@ -47,7 +47,7 @@ def build_chunk_poem(df, terms_info, tokenid, token2id, tid_p):
     tid_out = open(tid_p, 'a')
     flag = 1
     for doc in df:
-        docno = doc['doc_id']
+        docno = doc['_id']
         vb_docno = encode_vbyte(docno)
 
         content = doc['content']

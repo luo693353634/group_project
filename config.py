@@ -31,10 +31,10 @@ f_dictionary = {
 
 dno_data_p = {
     1: 'docno_data_test',
-    2: 'docno_data'
+    2: 'data_id_json'
 }
 
 docno_dictionary = {
     1: 'docno_data_test',
-    2: 'docno_data'
+    2: 'data_id_json'
 }
