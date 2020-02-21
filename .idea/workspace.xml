@@ -157,11 +157,11 @@
     <servers />
   </component>
   <component name="WindowStateProjectService">
-    <state x="421" y="195" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1582146210679">
+    <state x="421" y="195" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1582320662345">
       <screen x="0" y="23" width="1440" height="811" />
     </state>
     <state x="374" y="144" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1280.680@0.0.1280.680" timestamp="1581958006309" />
-    <state x="421" y="195" key="#com.intellij.fileTypes.FileTypeChooser/0.23.1440.811@0.23.1440.811" timestamp="1582146210679" />
+    <state x="421" y="195" key="#com.intellij.fileTypes.FileTypeChooser/0.23.1440.811@0.23.1440.811" timestamp="1582320662345" />
     <state x="282" y="0" key="CommitChangelistDialog2" timestamp="1582056896297">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
@@ -214,11 +214,12 @@
     </state>
     <state width="1259" height="204" key="GridCell.Tab.1.right/0.0.1280.680@0.0.1280.680" timestamp="1582078570339" />
     <state width="1379" height="269" key="GridCell.Tab.1.right/0.23.1440.811@0.23.1440.811" timestamp="1581364873933" />
-    <state x="204" y="0" key="SettingsEditor" timestamp="1582051272906">
-      <screen x="0" y="0" width="1280" height="680" />
+    <state x="230" y="23" key="SettingsEditor" timestamp="1582320830251">
+      <screen x="0" y="23" width="1440" height="811" />
     </state>
     <state x="204" y="0" key="SettingsEditor/0.0.1280.680@0.0.1280.680" timestamp="1582051272906" />
     <state x="229" y="66" key="SettingsEditor/0.23.1440.808@0.23.1440.808" timestamp="1581335188061" />
+    <state x="230" y="23" key="SettingsEditor/0.23.1440.811@0.23.1440.811" timestamp="1582320830251" />
     <state x="324" y="166" key="com.intellij.ide.util.TipDialog" timestamp="1582134091005">
       <screen x="0" y="0" width="1280" height="680" />
     </state>

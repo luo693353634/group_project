@@ -3,7 +3,7 @@ import os
 from preprocess import preprocess_query
 from config import *
 from tools import *
-
+import math
 
 # get all docno in the index, return a list of docno
 def get_all_doc(index):
@@ -67,17 +67,26 @@ def one_word_search(word, index, token2id):
 
 
 def multi_words_search(query, index, token2id):
-    res_dic = dict()
+    N = 3
+    doc_score = dict()
     res = []
     for word in query:
+        if word not in token2id.keys():
+            continue
         l = len(word)
         res = one_word_search(word, index, token2id)
+        df = float(len(res))
+        tf = 0
         for docno in res:
-            if docno not in res_dic:
-                res_dic[docno] = len(docno)*l  # tf*wordLength
+            if word in token2id.keys():
+                if token2id[word] in index.keys():
+                    tf = float(len(index[token2id[word]][docno]))
+            w_tfidf = (1 + math.log(tf, 10)) * math.log(N / df, 10)
+            if docno not in doc_score.keys():
+                doc_score[docno] = w_tfidf * l  # w_tfidf * wordLength
             else:
-                res_dic[docno] += len(docno)*l
-    for item in sort_dic_value(res_dic):
+                doc_score[docno] += w_tfidf * l
+    for item in sort_dic_value(doc_score):
         res.append(item[0])
     return res
 
@@ -115,9 +124,9 @@ def long_phrase_search(phrase, index, token2id):
     result = []
     for i in range(len(phrase)-1):
         if i == 0:
-            res1 = phrase_search(phrase[i],phrase[i+1], index, token2id)
+            res1 = phrase_search(phrase[i], phrase[i+1], index, token2id)
         else:
-            res2 = phrase_search(phrase[i],phrase[i+1], index, token2id)
+            res2 = phrase_search(phrase[i], phrase[i+1], index, token2id)
             for item in res2:
                 if item in res1:
                     result.append(item)
@@ -152,18 +161,21 @@ def search_query(query, index, token2id):
     return res
 
 
-def final_search(query, phrase, index, tokens_id):
+def search(query, phrase, index, tokens_id):
     result1 = search_phrase(phrase, index, tokens_id)
     result2 = search_query(query, index, tokens_id)  # do boolean search, get a list of doc No
 
     result = []
     tmp = []
+    # phrase search
     for docno in result1:
-        if docno in result2:
+        if docno in result2:  # in both phrase and query
             result.append(docno)
         else:
             tmp.append(docno)
     result = result + tmp  # all phrase search result
+
+    # query
     for docno in result2:
         if docno not in result:
             result.append(docno)
@@ -171,17 +183,17 @@ def final_search(query, phrase, index, tokens_id):
 
 
 if __name__ == '__main__':
-    MODE = mode['product']  # test or product
+    MODE = mode['test']  # test or product
 
     index_for_search = load_pickle(pickle_index_p[MODE])  # load index
     tokens_id = load_pickle(tokens_id_vb_p[MODE])
 
     query1 = '北京\'花草\''
-    query2 = '北京'
-    query3 = '我爱北京天安门'
+    query2 = '天安门'
+    query3 = '郑楠'
     query4 = '花儿\'太阳当空照\''
-    query, phrase = preprocess_query(query1)
-    res = final_search(query, phrase, index_for_search, tokens_id)  # get boolean search result
+    query, phrase = preprocess_query(query2)
+    res = search(query, phrase, index_for_search, tokens_id)  # get boolean search result
     print('result:')
     if len(res) > 20:
         res = (res[:20])
@@ -189,4 +201,3 @@ if __name__ == '__main__':
         res = (res)
     for item in res:
         print(decode_vbyte(item))
-
