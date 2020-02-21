@@ -157,10 +157,11 @@
     <servers />
   </component>
   <component name="WindowStateProjectService">
-    <state x="374" y="144" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1581958006309">
-      <screen x="0" y="0" width="1280" height="680" />
+    <state x="421" y="195" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1582146210679">
+      <screen x="0" y="23" width="1440" height="811" />
     </state>
     <state x="374" y="144" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1280.680@0.0.1280.680" timestamp="1581958006309" />
+    <state x="421" y="195" key="#com.intellij.fileTypes.FileTypeChooser/0.23.1440.811@0.23.1440.811" timestamp="1582146210679" />
     <state x="282" y="0" key="CommitChangelistDialog2" timestamp="1582056896297">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
@@ -226,26 +227,5 @@
       <screen x="0" y="23" width="1440" height="808" />
     </state>
     <state x="393" y="155" width="670" height="676" key="search.everywhere.popup/0.23.1440.808@0.23.1440.808" timestamp="1581360545214" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/application.py</url>
-          <line>57</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/application.py</url>
-          <line>71</line>
-          <option name="timeStamp" value="8" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/application.py</url>
-          <line>60</line>
-          <option name="timeStamp" value="10" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

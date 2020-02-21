@@ -3,7 +3,6 @@ from wtforms import Form, StringField, validators, ValidationError, SelectField
 from flask_pymongo import PyMongo
 from search import *
 from flask_paginate import Pagination, get_page_args
-import algorithm
 
 MODE = mode['product']  # test or product
 list_res = []
@@ -92,5 +91,5 @@ def result(result_id):
 
 
 if __name__ == '__main__':
-    # app.run(debug=True, host='0.0.0.0')
-    app.run(debug=True)
+    app.run(debug=True, host='0.0.0.0',port=5000)
+
