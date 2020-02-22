@@ -79,11 +79,12 @@ def sort_dic_value(dic):
 
 def transfer(in_path,out_path):
     index=load_pickle(in_path)
+    data=sorted(index.items(),key=lambda x:x[0],reverse=True)
+    print(data[0])
     print("read finished")
     new_dict={}
-    for key in index:
-        if len(index[key])>50000:
-            new_dict[key]=index[key]
+    for i in range(len(data)//2):
+        new_dict[data[i][0]]=data[i][1]
     write_pickle(new_dict,out_path)
     print("write finished")
     # json_str=json.dumps(index,skipkeys=True)

@@ -50,10 +50,6 @@ def search():
         global content
         content = form.content.data
         c_type = form.type.data
-        """
-        将查询的词传入算法，然后返回查询结果。查询结果应当使用SQL或者字典以加快运行速度
-        如果涉及到属性，应定义一个类，规范化检索过程
-        """
         query, phrase = preprocess_query(content)
         result_list = final_search(query, phrase, index_for_search, tokens_id)
 
