@@ -67,7 +67,7 @@ def one_word_search(word, index, token2id):
 
 
 def multi_words_search(query, index, token2id):
-    N = 3
+    N = 220344
     doc_score = dict()
     res = []
     for word in query:
@@ -193,7 +193,7 @@ if __name__ == '__main__':
     query3 = '郑楠'
     query4 = '花儿\'太阳当空照\''
     query, phrase = preprocess_query(query2)
-    res = search(query, phrase, index_for_search, tokens_id)  # get boolean search result
+    res = final_search(query, phrase, index_for_search, tokens_id)  # get boolean search result
     print('result:')
     if len(res) > 20:
         res = (res[:20])
