@@ -28,11 +28,9 @@ def write_json(path, dic_w):
     f.close()
 
 
-def write_txt(path, dic_w):
-    f = open(path, 'a')
-    f.seek(0)
-    f.truncate()
-    f.write(str(dic_w))
+def write_txt(dic_w, path):
+    f = open(path, 'wb+')
+    f.write(dic_w)
     f.close()
 
 

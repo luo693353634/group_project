@@ -86,9 +86,10 @@ def multi_words_search(query, index, token2id):
                 doc_score[docno] = w_tfidf * l  # w_tfidf * wordLength
             else:
                 doc_score[docno] += w_tfidf * l
+    final_res = []
     for item in sort_dic_value(doc_score):
-        res.append(item[0])
-    return res
+        final_res.append(item[0])
+    return final_res
 
 
 def phrase_search(term1, term2, index, token2id):

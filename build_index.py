@@ -5,6 +5,80 @@ from tools import *
 punctuations = string.punctuation
 
 
+def build_lyrics_without_pos(reader, terms_info, tokenid, token2id, tid_p):
+    tid_out = open(tid_p, 'a')
+    flag = 1
+    for doc in reader:
+        docno = doc['_id']
+        vb_docno = encode_vbyte(docno)
+
+        content = doc['lyric']
+        content = re.sub(r'\[[0-9]{2}:[0-9]{2}\.[0-9]{2,}]', '', content)
+        content = re.sub(r'[0-9\s+\.\!\/_,$%^*()?;；：:-【】+\"\']+|[+——！，;：:。？、~@#￥%……&*（）]+', ' ', content)
+        # 这里加上歌手名字不分词的操作
+        # **********code*********#
+        content = jieba.lcut(content)
+        content = stopping(content)
+        if flag:
+            print(content)
+            flag = 0
+
+        for i, token in enumerate(content):  # 有些空格会算一个词，在这里保留占位
+            if len(token.strip()):  # not space
+                # add token to t2id dictionary
+                if token not in token2id.keys():
+                    token2id[token] = tokenid
+                    tid_out.write(str(tokenid) + '\t' + token + '\n')
+                    tokenid += 1
+
+                vb_tokenid = encode_vbyte(token2id[token])  # compress token id
+                if vb_tokenid not in terms_info.keys():  # new term
+                    terms_info[vb_tokenid] = {vb_docno: 1}  # first pos in a doc
+                else:  # exist term
+                    if vb_docno not in terms_info[vb_tokenid].keys():  # new doc for this term
+                        terms_info[vb_tokenid][vb_docno] = 1
+                    else:
+                        terms_info[vb_tokenid][vb_docno] += 1
+    return terms_info, tokenid, token2id
+
+
+def build_poem_without_pos(df, terms_info, tokenid, token2id, tid_p):
+    tid_out = open(tid_p, 'a')
+    flag = 1
+    for doc in df:
+        docno = doc['doc_id']
+        vb_docno = encode_vbyte(docno)
+
+        content = doc['content']
+        if content is None:
+            continue
+        content = re.sub(r'\[[0-9]{2}:[0-9]{2}\.[0-9]{2,}]', '', content)
+        content = re.sub(r'[0-9\s+\.\!\/_,$%^*()?;；：:-【】+\"\']+|[+——！，;：:。？、~@#￥%……&*（）]+', ' ', content)
+        tmp = []
+        for cha in content.strip():
+            tmp.append(cha)
+        content = tmp
+        if flag:
+            print(content)
+            flag = 0
+        for i, token in enumerate(content):  # 有些空格会算一个词，在这里保留占位
+            if len(token.strip()):  # not space
+                # add token to t2id dictionary
+                if token not in token2id.keys():
+                    token2id[token] = tokenid
+                    tid_out.write(str(tokenid) + '\t' + token + '\n')
+                    tokenid += 1
+                vb_tokenid = encode_vbyte(token2id[token])  # compress token id
+                if vb_tokenid not in terms_info.keys():  # new term
+                    terms_info[vb_tokenid] = {vb_docno: 1}
+                else:  # exist term
+                    if vb_docno not in terms_info[vb_tokenid].keys():  # new doc for this term
+                        terms_info[vb_tokenid][vb_docno] = 1
+                    else:
+                        terms_info[vb_tokenid][vb_docno] += 1
+    return terms_info, tokenid, token2id
+
+
 def build_chunk_lyrics(reader, terms_info, tokenid, token2id, tid_p):
     tid_out = open(tid_p, 'a')
     flag = 1
@@ -33,13 +107,14 @@ def build_chunk_lyrics(reader, terms_info, tokenid, token2id, tid_p):
 
                 vb_tokenid = encode_vbyte(token2id[token])  # compress token id
                 if vb_tokenid not in terms_info.keys():  # new term
-                    terms_info[vb_tokenid] = {vb_docno: [i + 1]}  # first pos in a doc
+                    terms_info[vb_tokenid] = {vb_docno: [bytes(i + 1)]}  # first pos in a doc
                 else:  # exist term
                     if vb_docno not in terms_info[vb_tokenid].keys():  # new doc for this term
-                        terms_info[vb_tokenid][vb_docno] = [i + 1]
+                        terms_info[vb_tokenid][vb_docno] = [bytes(i + 1)]
                     else:  # exist term, exist doc
                         terms_info[vb_tokenid][vb_docno].append(
-                                i + 1 - terms_info[vb_tokenid][vb_docno][-1])  # delta encoded position
+                                bytes(i + 1 - int.from_bytes(terms_info[vb_tokenid][vb_docno][-1], byteorder='big'))
+                        )  # delta encoded position
     return terms_info, tokenid, token2id
 
 
@@ -47,7 +122,7 @@ def build_chunk_poem(df, terms_info, tokenid, token2id, tid_p):
     tid_out = open(tid_p, 'a')
     flag = 1
     for doc in df:
-        docno = doc['_id']
+        docno = doc['doc_id']
         vb_docno = encode_vbyte(docno)
 
         content = doc['content']
@@ -79,13 +154,14 @@ def build_chunk_poem(df, terms_info, tokenid, token2id, tid_p):
                 vb_tokenid = encode_vbyte(token2id[token])  # compress token id
 
                 if vb_tokenid not in terms_info.keys():  # new term
-                    terms_info[vb_tokenid] = {vb_docno: [i + 1]} # first pos in a doc
+                    terms_info[vb_tokenid] = {vb_docno: [bytes(i + 1)]} # first pos in a doc
                 else:  # exist term
                     if vb_docno not in terms_info[vb_tokenid].keys():  # new doc for this term
-                        terms_info[vb_tokenid][vb_docno] = [i + 1]
+                        terms_info[vb_tokenid][vb_docno] = [bytes(i + 1)]
                     else:  # exist term, exist doc
                         terms_info[vb_tokenid][vb_docno].append(
-                                i + 1 - terms_info[vb_tokenid][vb_docno][-1])  # delta encoded position
+                                bytes(i + 1 - int.from_bytes(terms_info[vb_tokenid][vb_docno][-1], byteorder='big'))
+                        )  # delta encoded position
     return terms_info, tokenid, token2id
 
 
@@ -122,7 +198,7 @@ def write_index_for_view(tinfo, out_path):
     return
 
 
-def build_index(mode):
+def build_index(mode, enable_pos = 1):
     file_dictionary = docno_dictionary[mode]
 
     tid_p = tokens_id_p[mode]
@@ -139,12 +215,28 @@ def build_index(mode):
         path = os.path.join(os.getcwd(), '{}/{}'.format(file_dictionary, item))
         reader = load_json(path)
         if item[0] == 'l':
-            terms_info, tokenid, token2id = build_chunk_lyrics(reader, terms_info, tokenid, token2id, tid_p)
+            #continue
+            if enable_pos:
+                terms_info, tokenid, token2id = build_chunk_lyrics(reader, terms_info, tokenid, token2id, tid_p)
+            else:
+                terms_info, tokenid, token2id = build_lyrics_without_pos(reader, terms_info, tokenid, token2id, tid_p)
         elif item[0] == 'p':
-            terms_info, tokenid, token2id = build_chunk_poem(reader, terms_info, tokenid, token2id, tid_p)
-    write_pickle(terms_info, pickle_index_p[MODE])
-    write_index_for_view(terms_info, txt_index_p[MODE])
-    print('finall is {}, write finished'.format(i))
+            if enable_pos:
+                terms_info, tokenid, token2id = build_chunk_poem(reader, terms_info, tokenid, token2id, tid_p)
+            else:
+                terms_info, tokenid, token2id = build_poem_without_pos(reader, terms_info, tokenid, token2id, tid_p)
+
+    print('read finished!')
+    final_dict = dict()
+    for item in terms_info.keys():
+        if len(terms_info[item]) > 0:
+            final_dict[item] = terms_info[item]
+
+    print('remove low f words finished!')
+
+    write_pickle(final_dict, pickle_index_p[MODE])
+    #write_txt(final_dict, txt_index_p[MODE])
+    print('{} files in total, write finished'.format(i))
     return terms_info
 
 
