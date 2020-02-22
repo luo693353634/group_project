@@ -46,7 +46,7 @@ def build_poem_without_pos(df, terms_info, tokenid, token2id, tid_p):
     tid_out = open(tid_p, 'a')
     flag = 1
     for doc in df:
-        docno = doc['doc_id']
+        docno = doc['_id']
         vb_docno = encode_vbyte(docno)
 
         content = doc['content']
@@ -122,7 +122,7 @@ def build_chunk_poem(df, terms_info, tokenid, token2id, tid_p):
     tid_out = open(tid_p, 'a')
     flag = 1
     for doc in df:
-        docno = doc['doc_id']
+        docno = doc['_id']
         vb_docno = encode_vbyte(docno)
 
         content = doc['content']
@@ -283,9 +283,9 @@ def write_tokensid_vb(mode):
 
 
 if __name__ == '__main__':
-    MODE = mode['product']  # test or product
+    MODE = mode['test']  # test or product
     #add_docno_all(MODE)
-    terms_info = build_index(MODE)
+    terms_info = build_index(MODE, 0)
     write_tokensid_vb(MODE)
     print('building index finished')
 
