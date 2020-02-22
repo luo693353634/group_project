@@ -161,7 +161,7 @@ def search_query(query, index, token2id):
     return res
 
 
-def search(query, phrase, index, tokens_id):
+def final_search(query, phrase, index, tokens_id):
     result1 = search_phrase(phrase, index, tokens_id)
     result2 = search_query(query, index, tokens_id)  # do boolean search, get a list of doc No
 
