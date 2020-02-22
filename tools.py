@@ -79,9 +79,16 @@ def sort_dic_value(dic):
 
 def transfer(in_path,out_path):
     index=load_pickle(in_path)
-    json_str=json.dumps(index,skipkeys=True)
-    f=open(out_path,'wb+')
-    f.write(json_str)
+    print("read finished")
+    new_dict={}
+    for key in index:
+        if len(index[key])>50000:
+            new_dict[key]=index[key]
+    write_pickle(new_dict,out_path)
+    print("write finished")
+    # json_str=json.dumps(index,skipkeys=True)
+    # f=open(out_path,'wb+')
+    # f.write(json_str)
 
 if __name__ == '__main__':
         # dicc = {b'\x80': 14, b'\x81': {b'\x81': [1], b'\x86': [213]},
@@ -106,5 +113,5 @@ if __name__ == '__main__':
         # # 此处使用的是load(目标文件)
         # data3 = pickle.load(df)
         # print(data3[b'\x9b'])
-        transfer("data/all.index.pickle","/Users/mac/.ssh/all.index.json")
+        transfer("/Users/mac/.ssh/all.index.pickle","/Users/mac/.ssh/new_all.index.pickle")
 
