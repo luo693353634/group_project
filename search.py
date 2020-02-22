@@ -67,7 +67,7 @@ def one_word_search(word, index, token2id):
 
 
 def multi_words_search(query, index, token2id):
-    N = 220344
+    N = 922000
     doc_score = dict()
     res = []
     for word in query:
