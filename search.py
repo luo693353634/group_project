@@ -67,7 +67,7 @@ def one_word_search(word, index, token2id):
 
 
 def multi_words_search(query, index, token2id):
-    N = 922000
+    N = sum_doc[MODE]
     doc_score = dict()
     res = []
     for word in query:
@@ -80,15 +80,18 @@ def multi_words_search(query, index, token2id):
         for docno in res:
             if word in token2id.keys():
                 if token2id[word] in index.keys():
-                    tf = float(len(index[token2id[word]][docno]))
+                    tf = float(index[token2id[word]][docno])
+                    # tf = float(len(index[token2id[word]][docno]))
             w_tfidf = (1 + math.log(tf, 10)) * math.log(N / df, 10)
             if docno not in doc_score.keys():
                 doc_score[docno] = w_tfidf * l  # w_tfidf * wordLength
             else:
                 doc_score[docno] += w_tfidf * l
-    for item in sort_dic_value(doc_score):
-        res.append(item[0])
-    return res
+    final_res = []
+    tmp = sort_dic_value(doc_score)
+    for item in tmp:
+        final_res.append(item[0])
+    return final_res
 
 
 def phrase_search(term1, term2, index, token2id):
@@ -161,7 +164,7 @@ def search_query(query, index, token2id):
     return res
 
 
-def final_search(query, phrase, index, tokens_id):
+def search(query, phrase, index, tokens_id):
     result1 = search_phrase(phrase, index, tokens_id)
     result2 = search_query(query, index, tokens_id)  # do boolean search, get a list of doc No
 
@@ -174,7 +177,6 @@ def final_search(query, phrase, index, tokens_id):
         else:
             tmp.append(docno)
     result = result + tmp  # all phrase search result
-
     # query
     for docno in result2:
         if docno not in result:
@@ -183,7 +185,7 @@ def final_search(query, phrase, index, tokens_id):
 
 
 if __name__ == '__main__':
-    MODE = mode['test']  # test or product
+    MODE = mode['product']  # test or product
 
     index_for_search = load_pickle(pickle_index_p[MODE])  # load index
     tokens_id = load_pickle(tokens_id_vb_p[MODE])
@@ -193,7 +195,7 @@ if __name__ == '__main__':
     query3 = '郑楠'
     query4 = '花儿\'太阳当空照\''
     query, phrase = preprocess_query(query2)
-    res = final_search(query, phrase, index_for_search, tokens_id)  # get boolean search result
+    res = search(query, phrase, index_for_search, tokens_id)  # get boolean search result
     print('result:')
     if len(res) > 20:
         res = (res[:20])
@@ -201,3 +203,4 @@ if __name__ == '__main__':
         res = (res)
     for item in res:
         print(decode_vbyte(item))
+
