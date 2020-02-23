@@ -4,6 +4,7 @@ from preprocess import preprocess_query
 from config import *
 from tools import *
 import math
+import time
 
 # get all docno in the index, return a list of docno
 def get_all_doc(index):
@@ -188,16 +189,22 @@ def search(query, phrase, index, tokens_id):
 
 if __name__ == '__main__':
     MODE = mode['product']  # test or product
-
+    print('begin load')
+    print(time.localtime(time.time()))
     index_for_search = load_pickle(pickle_index_p[MODE])  # load index
     tokens_id = load_pickle(tokens_id_vb_p[MODE])
-
+    print('load index finised')
+    print(time.localtime(time.time()))
     query1 = '北京\'花草\''
     query2 = '天安门'
     query3 = '郑楠'
     query4 = '花儿\'太阳当空照\''
     query, phrase = preprocess_query(query2)
+    print('begin search')
+    print(time.localtime(time.time()))
     res = search(query, phrase, index_for_search, tokens_id)  # get boolean search result
+    print('search finish')
+    print(time.time())
     print('result:')
     for item in res:
         print(decode_vbyte(item))
