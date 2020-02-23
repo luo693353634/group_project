@@ -69,7 +69,6 @@ def one_word_search(word, index, token2id):
 def multi_words_search(query, index, token2id):
     N = sum_doc[MODE]
     doc_score = dict()
-    res = []
     for word in query:
         if word not in token2id.keys():
             continue
@@ -89,8 +88,11 @@ def multi_words_search(query, index, token2id):
                 doc_score[docno] += w_tfidf * l
     final_res = []
     tmp = sort_dic_value(doc_score)
-    for item in tmp:
-        final_res.append(item[0])
+    for i, item in enumerate(tmp):
+        if i < 200:
+            final_res.append(item[0])
+        else:
+            break
     return final_res
 
 
@@ -181,7 +183,7 @@ def search(query, phrase, index, tokens_id):
     for docno in result2:
         if docno not in result:
             result.append(docno)
-    return result
+    return result[:20]
 
 
 if __name__ == '__main__':
@@ -197,10 +199,6 @@ if __name__ == '__main__':
     query, phrase = preprocess_query(query2)
     res = search(query, phrase, index_for_search, tokens_id)  # get boolean search result
     print('result:')
-    if len(res) > 20:
-        res = (res[:20])
-    else:
-        res = (res)
     for item in res:
         print(decode_vbyte(item))
 
