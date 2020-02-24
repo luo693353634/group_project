@@ -1,4 +1,4 @@
-# -*- coding=utf-8 -*
+
 import os
 from preprocess import preprocess_query
 from config import *
@@ -68,7 +68,7 @@ def one_word_search(word, index, token2id):
 
 
 def multi_words_search(query, index, token2id):
-    N = sum_doc[MODE]
+    N = 921771
     doc_score = dict()
     for word in query:
         if word not in token2id.keys():
@@ -80,8 +80,8 @@ def multi_words_search(query, index, token2id):
         for docno in res:
             if word in token2id.keys():
                 if token2id[word] in index.keys():
-                    tf = float(index[token2id[word]][docno])
-                    # tf = float(len(index[token2id[word]][docno]))
+                   # tf = float(index[token2id[word]][docno])
+                     tf = float(len(index[token2id[word]][docno]))
             w_tfidf = (1 + math.log(tf, 10)) * math.log(N / df, 10)
             if docno not in doc_score.keys():
                 doc_score[docno] = w_tfidf * l  # w_tfidf * wordLength
@@ -167,7 +167,7 @@ def search_query(query, index, token2id):
     return res
 
 
-def search(query, phrase, index, tokens_id):
+def final_search(query, phrase, index, tokens_id):
     result1 = search_phrase(phrase, index, tokens_id)
     result2 = search_query(query, index, tokens_id)  # do boolean search, get a list of doc No
 
