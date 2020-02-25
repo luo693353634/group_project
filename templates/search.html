@@ -1,15 +1,16 @@
 {% extends 'layout.html' %}
 
 {% block body %}
-    <h1>Search Result <small> Welcome {{session.nickname}}</small></h1>
-    <h3>You just search {{ content }}.</h3>
+    <h1>Search Result <a href="/" class="btn btn-success pull-right">Back To Homepage</a></h1>
+    <h3>You searched {{ content }}.</h3>
+    <h4 style="display: none;" value="{{content}}"></h4>
     <hr>
 <div class="container">
     {{ pagination.links }}
 <div class="table-responsive",id='table'>
     <table class="table table-striped table-hover">
 
-        <td>
+        <tr>
             <th>序号</th>
             <th>题目</th>
             <th>朝代</th>
@@ -17,7 +18,6 @@
             <th>内容</th>
             <th></th>
         </tr>
-          <tbody>
             {% for result in users %}
 
                 <tr>
@@ -26,20 +26,19 @@
                         <td>{{result['title']}}</td>
                         <td>{{result['dynasty']}}</td>
                         <td>{{result['author']}}</td>
-                        <td>{{result['content'][:100]}}</td>
+                        <td class='cnt'>{{result['content'][:100]}}</td>
                     {% endif %}
                     {% if 'song_name' in result %}
                         <td>{{result['song_name']}}</td>
                         <td>{{result['album_name']}}</td>
                         <td>{{result['artist_name']}}</td>
-			<td>{{result['lyric'][:100]}}</td>
+			            <td class='cnt'>{{result['lyric'][:100]}}</td>
                     {% endif %}
                     <td><a href="result/{{result['_id']}}" class="btn btn-primary pull-right">View</a></td>
                 </tr>
             {% endfor %}
-          </tbody>
     </table> 
-    </div>
+    </div><!-- 
     <script>
          var content = document.getElementById("table");
          var contents = content.innerHTML;
@@ -48,7 +47,27 @@ window.onload= function() {
          var values = contents.split(value);
          content.innerHTML = values.join('<span style="background:red;">' + value + '</span>');
                          };
-</script>
+</script> -->
     {{ pagination.links }}
     </div>
    {% endblock%}
+
+<script type="text/javascript">
+    function highlight(text, words, tag) {
+        tag = tag || 'span';
+        var i, len = words.length, re;
+        for (i = 0; i < len; i++) {
+            re = new RegExp(words[i], 'g');
+            if (re.test(text)) {
+                text = text.replace(re, '<'+ tag +' class="highlight" style="color: red;">$&</'+ tag +'>');
+            }
+        }
+        return text;
+    }
+
+    $(function(){
+    var $td = $('.cnt');
+    var words = $('h4').attr("value").replace(/(\s,|,\s)/g, ',').split(',');
+    $td.html(highlight($td.html(), words) );
+    });
+</script>
