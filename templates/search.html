@@ -32,9 +32,8 @@
                         <td>{{result['song_name']}}</td>
                         <td>{{result['album_name']}}</td>
                         <td>{{result['artist_name']}}</td>
-			<td>{{result['lyric'][:100]}</td>
+			<td>{{result['lyric'][:100]}}</td>
                     {% endif %}
->
                     <td><a href="result/{{result['_id']}}" class="btn btn-primary pull-right">View</a></td>
                 </tr>
             {% endfor %}
@@ -51,4 +50,5 @@ window.onload= function() {
                          };
 </script>
     {{ pagination.links }}
-
+    </div>
+   {% endblock%}

@@ -184,7 +184,7 @@ def final_search(query, phrase, index, tokens_id):
     for docno in result2:
         if docno not in result:
             result.append(docno)
-    return result[:20]
+    return result[:200]
 
 
 if __name__ == '__main__':
