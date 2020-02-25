@@ -72,8 +72,11 @@ def search():
     # pagination_users = search_result
     pagination = Pagination(page=page, per_page=per_page, total=total,
                             css_framework='bootstrap4')
-
+    query1 = ''
+    for i in range(len(query.extend(phrase))):
+        query1 += str(query.extend(phrase)[i]) + ','
     return render_template('search.html', content=content,
+                           query=query1,
                            users=pagination_users,
                            page=page,
                            per_page=per_page,
@@ -88,4 +91,3 @@ def result(result_id):
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0',port=5000)
-
