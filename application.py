@@ -54,15 +54,24 @@ def search():
         result_list = final_search(query, phrase, index_for_search, tokens_id)
 
         search_result = []
-
-        for i in range(len(result_list)):
-            item = result_list[i]
-
-            search_result.append(mongo.db.song_poem.find_one({"_id": decode_vbyte(item)}))
-            # if len(search_result) >= 3:
-            #     break
-            global list_res
-            list_res = search_result
+        if c_type == '古代':
+            for i in range(len(result_list)):
+                item = result_list[i]
+                data = mongo.db.song_poem.find_one({"_id": decode_vbyte(item)})
+                if "dynasty" in data:
+                    search_result.append(data)
+                    if len(search_result) >= 200:
+                        break
+        else:
+            if c_type == '现代':
+                for i in range(len(result_list)):
+                    data = mongo.db.song_poem.find_one({"_id": decode_vbyte(item)})
+                    if "album_name" in data:
+                        search_result.append(data)
+                        if len(search_result) >= 200:
+                            break
+        global list_res
+        list_res = search_result
 
     page, per_page, offset = get_page_args(page_parameter='page',
                                            per_page_parameter='per_page')
