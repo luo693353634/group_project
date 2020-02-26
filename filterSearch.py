@@ -27,6 +27,8 @@ def dynasty_search(input_big_dynasties, cIndex, cid):
 
 
 def name_search(name, nIndex, nid):
+    if len(name) == 0:
+        return []
     res = []
     standard_names = most_similar(name)
     for item in standard_names:
@@ -52,7 +54,15 @@ if __name__ == '__main__':
     names_id = load_pickle(names_id_vb_p[MODE])
     collectionIndex = load_pickle(pickle_collectionIndex_p[MODE])  # load collection
     collection_id = load_pickle(collection_id_vb_p[MODE])
+
+
     name = '李白'
-    input_big_dynasties = ['宋', '隋唐']
-    filter_res = filter_search(name, input_big_dynasties, nameIndex, collectionIndex, names_id, collection_id)
-    print(len(filter_res))
+    input_big_dynasties = []
+    res1 = name_search(name, nameIndex, names_id)
+    print(len(res1))
+    res2 = dynasty_search(input_big_dynasties, collectionIndex, collection_id)  # do boolean search, get a list of doc No
+    print(len(res2))
+
+
+    #filter_res = filter_search(name, input_big_dynasties, nameIndex, collectionIndex, names_id, collection_id)
+    #print(len(filter_res))

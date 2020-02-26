@@ -72,11 +72,9 @@ def sort_dic_key(dic):
 
 
 def sort_dic_value(dic):
-    res = sorted(dic.items(), key=operator.itemgetter(1))
-    if len(res) > 1:
-        return reversed(res)  # decreasing
-    else:
-        return res
+    res = sorted(dic.items(), key=operator.itemgetter(1), reverse=True)  # decreasing
+    return res
+
 
 if __name__ == '__main__':
     print(sys.getsizeof(encode_vbyte(256)))
