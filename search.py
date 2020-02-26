@@ -127,9 +127,9 @@ def final_search(query, phrase, index, tokens_id, name='', input_big_dynasties=[
     result2 = search_query(query, index, tokens_id)  # do boolean search, get a list of doc No
 
     res_name = name_search(name, nameIndex, names_id)
-    print(len(res_name))
+    print('name_doc: {}'.format(len(res_name)))
     res_d = dynasty_search(input_big_dynasties, collectionIndex, collection_id)
-    print(len(res_d))
+    print('dynastiy_doc: {}'.format(len(res_d)))
 
     # phrase search
     result = list(set(result1)&set(result2)) + list(set(result1).difference(set(result2)))  # all phrase search result
@@ -171,8 +171,8 @@ def find_name(query):
 if __name__ == '__main__':
     MODE = mode['product']  # test or product
     query = '明月 李白'
-    name = find_name(query)
     input_big_dynasties = ['宋', '隋唐']
+    name = find_name(query)
     query, phrase = preprocess_query(query)
     print('phrase: {}'.format(phrase))
     print('query: {}'.format(query))
