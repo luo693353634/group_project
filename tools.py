@@ -72,8 +72,8 @@ def sort_dic_key(dic):
 
 
 def sort_dic_value(dic):
-    res = sorted(dic.items(), key=operator.itemgetter(1), reverse=True)  # decreasing
-    return res
+    res = sorted(dic.items(), key=operator.itemgetter(1))
+    return reversed(res)  # decreasing
 
 
 if __name__ == '__main__':

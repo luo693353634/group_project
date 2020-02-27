@@ -4,9 +4,54 @@ from preprocess import preprocess_query
 from config import *
 from tools import *
 import math
-from filterSearch import name_search, dynasty_search
 import time
-from is_name import get_name_score
+
+# get all docno in the index, return a list of docno
+def get_all_doc(index):
+    res = []
+    for term in index:
+        for doc in index[term].keys():
+            if doc not in res:
+                res.append(doc)
+    return res
+
+
+# AND search
+# for given term1, term2, index,
+# return a list containing all docno where both term1 and term2 occur
+def and_search(term1, term2, index):
+    res = []
+    term1 = encode_vbyte(term1)
+    term2 = encode_vbyte(term2)
+    if term1 in index.keys() and term2 in index.keys():
+        if len(index[term1]) < len(index[term2]):
+            for item in index[term1]:
+                if item in index[term2].keys():
+                    res.append(item)
+        else:
+            for item in index[term2]:
+                if item in index[term1].keys():
+                    res.append(item)
+    return res
+
+
+# OR search
+# for given term1, term2, index,
+# return a list containing all docno where both term1 or term2 occur
+def or_search(term1, term2, index):
+    res = []
+    if term1 in index.keys() and term2 in index.keys():
+        if len(index[term1]) < len(index[term2]):
+            res = index[term2].keys()
+            for docno in index[term1]:
+                if docno not in res:
+                    res.append(docno)
+        else:
+            res = index[term1].keys()
+            for docno in index[term1]:
+                if docno not in res:
+                    res.append(docno)
+    return res
 
 
 # find all docno where the input word occurs
@@ -122,92 +167,45 @@ def search_query(query, index, token2id):
     return res
 
 
-def final_search(query, phrase, index, nameIndex, collectionIndex,
-                 tokens_id, names_id, collection_id,
-                 name='', input_big_dynasties=[]):
+def final_search(query, phrase, index, tokens_id):
     result1 = search_phrase(phrase, index, tokens_id)
     result2 = search_query(query, index, tokens_id)  # do boolean search, get a list of doc No
 
-    res_name = name_search(name, nameIndex, names_id)
-    print('name_doc: {}'.format(len(res_name)))
-    res_d = dynasty_search(input_big_dynasties, collectionIndex, collection_id)
-    print('dynastiy_doc: {}'.format(len(res_d)))
-
+    result = []
+    tmp = []
     # phrase search
-    result = list(set(result1)&set(result2)) + list(set(result1).difference(set(result2)))  # all phrase search result
-
+    for docno in result1:
+        if docno in result2:  # in both phrase and query
+            result.append(docno)
+        else:
+            tmp.append(docno)
+    result = result + tmp  # all phrase search result
     # query
-
-    if len(name) and len(input_big_dynasties):
-        result = list(set(result) & set(res_name) & set (res_d))
-        for docno in result2:
-            if docno not in result and docno in res_name and docno in res_d:
-                result.append(docno)
-    elif len(name):
-        result = list(set(result) & set(res_name))
-        for docno in result2:
-            if docno not in result and docno in res_name:
-                result.append(docno)
-    elif len(input_big_dynasties):
-        result = list(set(result) & set(res_d))
-        for docno in result2:
-            if docno not in result and docno in res_d:
-                result.append(docno)
-    else:
-        for docno in result2:
-            if docno not in result:
-                result.append(docno)
+    for docno in result2:
+        if docno not in result:
+            result.append(docno)
     return result
-
-
-def find_name(query, names_id):
-    name_score = dict()
-    query = query.split()
-    for item in query:
-        name_score[item] = get_name_score(item, names_id)
-    name_score = sort_dic_value(name_score)
-    if name_score[0][1]:
-        name = name_score[0][0]
-    else:
-        name = ''
-    return name
 
 
 if __name__ == '__main__':
     MODE = mode['product']  # test or product
-    nameIndex = load_pickle(pickle_singerIndex_p[MODE])  # load singer
-    names_id = load_pickle(names_id_vb_p[MODE])
-    collectionIndex = load_pickle(pickle_collectionIndex_p[MODE])  # load collection
-    collection_id = load_pickle(collection_id_vb_p[MODE])
-    query = '李白'
-    input_big_dynasties = ['宋', '隋唐']
-    name = find_name(query, names_id)
-    query, phrase = preprocess_query(query)
-    print('phrase: {}'.format(phrase))
-    print('query: {}'.format(query))
-
-    # ***********************************************************
     print('begin load')
     print(time.localtime(time.time()))
     index_for_search = load_pickle(pickle_index_p[MODE])  # load index
     tokens_id = load_pickle(tokens_id_vb_p[MODE])
     print('load index finised')
     print(time.localtime(time.time()))
-    #***********************************************************
-
+    query1 = '北京\'花草\''
+    query2 = '天安门'
+    query3 = '郑楠'
+    query4 = '花儿\'太阳当空照\''
+    query, phrase = preprocess_query(query2)
     print('begin search')
     print(time.localtime(time.time()))
-    res = final_search(query, phrase, index_for_search, nameIndex, collectionIndex,
-                       tokens_id, names_id, collection_id,
-                       name, input_big_dynasties)  # get boolean search result
-
+    res = search(query, phrase, index_for_search, tokens_id)  # get boolean search result
+    print('search finish')
+    print(time.time())
     print('result:')
     for item in res:
         print(decode_vbyte(item))
-
-    print('search finish')
-    print(time.time())
-
-
-
 

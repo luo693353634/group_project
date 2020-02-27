@@ -4,14 +4,14 @@ mode = {
 }
 
 collection_id_p = {
-    1: 'data/test.dynasty2id',
-    2: 'data/dynasty2id'
+    1: 'data/test.collection2id',
+    2: 'data/collection2id'
 }
 
 
 collection_id_vb_p = {
-    1: 'data/test.dynasty2id.vb',
-    2: 'data/dynasty2id.vb'
+    1: 'data/test.collection2id.vb',
+    2: 'data/collection2id.vb'
 }
 
 
@@ -51,8 +51,8 @@ txt_singerIndex_p = {
 
 
 txt_collectionIndex_p = {
-    1: 'data/test.dynastyIndex',
-    2: 'data/all.dynastyIndex'
+    1: 'data/test.collectionIndex',
+    2: 'data/all.collectionIndex'
 }
 
 
@@ -69,8 +69,8 @@ pickle_singerIndex_p = {
 
 
 pickle_collectionIndex_p = {
-    1: 'data/test.dynastyIndex.pickle',
-    2: 'data/all.dynastyIndex.pickle'
+    1: 'data/test.collectionIndex.pickle',
+    2: 'data/all.collectionIndex.pickle'
 }
 
 
