@@ -122,7 +122,9 @@ def search_query(query, index, token2id):
     return res
 
 
-def final_search(query, phrase, index, tokens_id, name='', input_big_dynasties=[]):
+def final_search(query, phrase, index, nameIndex, collectionIndex,
+                 tokens_id, names_id, collection_id,
+                 name='', input_big_dynasties=[]):
     result1 = search_phrase(phrase, index, tokens_id)
     result2 = search_query(query, index, tokens_id)  # do boolean search, get a list of doc No
 
@@ -170,18 +172,11 @@ def find_name(query):
 
 if __name__ == '__main__':
     MODE = mode['product']  # test or product
-    query = '明月 李白'
-    input_big_dynasties = ['宋', '隋唐']
-    name = find_name(query)
-    query, phrase = preprocess_query(query)
-    print('phrase: {}'.format(phrase))
-    print('query: {}'.format(query))
-
-
     print('begin load')
     print(time.localtime(time.time()))
     index_for_search = load_pickle(pickle_index_p[MODE])  # load index
     tokens_id = load_pickle(tokens_id_vb_p[MODE])
+
     nameIndex = load_pickle(pickle_singerIndex_p[MODE])  # load singer
     names_id = load_pickle(names_id_vb_p[MODE])
     collectionIndex = load_pickle(pickle_collectionIndex_p[MODE])  # load collection
@@ -190,9 +185,17 @@ if __name__ == '__main__':
     print(time.localtime(time.time()))
     #***********************************************************
 
+    query = '明月 李白'
+    input_big_dynasties = ['宋', '隋唐']
+    name = find_name(query)
+    query, phrase = preprocess_query(query)
+    print('phrase: {}'.format(phrase))
+    print('query: {}'.format(query))
+
     print('begin search')
     print(time.localtime(time.time()))
-    res = final_search(query, phrase, index_for_search, tokens_id,
+    res = final_search(query, phrase, index_for_search, nameIndex, collectionIndex,
+                       tokens_id, names_id, collection_id,
                        name, input_big_dynasties)  # get boolean search result
 
     print('result:')
