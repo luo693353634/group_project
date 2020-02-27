@@ -38,7 +38,6 @@ def preprocess_query(query):
     begin = -1
     end = -1
     flag = 0
-    phrase = []
     for i, item in enumerate(query):
         if item == '\'' and begin == -1:
             begin = i
@@ -54,6 +53,12 @@ def preprocess_query(query):
             break
     if flag:
         phrase = jieba.lcut_for_search(query[begin+1:end])
+    else:
+        phrase = ''
+        for item in query.split():
+            if len(item) > len(phrase):
+                phrase = item
+        phrase = jieba.lcut_for_search(phrase)
 
     res = jieba.lcut_for_search(query)
     for item in query:
