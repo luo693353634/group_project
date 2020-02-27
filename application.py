@@ -25,7 +25,7 @@ class SearchForm(Form):
     content = StringField('Content', [
         validators.Length(min=1, max=20, message=u'Search content should less than 20')
     ])
-    type = SelectField('Type', choices=[('秦汉', '秦汉'), ('隋唐', '隋唐'), ('宋', '宋'),('元','元'),('明','明'),('清','清'),('当代','当代')])
+    type = SelectField('Type', choices=[('不限','不限'), ('秦汉', '秦汉'), ('隋唐', '隋唐'), ('宋', '宋'),('元','元'),('明','明'),('清','清'),('当代','当代')])
 
 
 index_for_search = load_pickle(pickle_index_p[MODE])  # load index
@@ -54,11 +54,15 @@ def search():
         global c_type
         content = form.content.data
         c_type = form.type.data
-        query, phrase = preprocess_query(content)
-        name = find_name(content, names_id)
+        name, query = find_name(content, names_id)
+        query, phrase = preprocess_query(query)
+        if c_type == '不限':
+            c_type = ['秦汉', '隋唐', '宋', '元', '明', '清', '当代']
+        else:
+            c_type =[c_type]
         result_list = final_search(query, phrase, index_for_search, nameIndex, collectionIndex,
                        tokens_id, names_id, collection_id,
-                       name, [c_type])
+                       name,c_type)
 
         search_result = []
         for i in range(len(result_list)):
