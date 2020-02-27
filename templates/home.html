@@ -1,0 +1,27 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+      <div class="jumbotron text-center">
+          <h1 style="font-size:60px">Chinese Poetry & Lyrics<small style="font-size:35px"> Search</small></h1>
+
+
+            <form method="post" action="{{ url_for('search') }}">
+              <div class="form-group">
+                  <input type="text" class="form-control" id="content-0-content" name="content" placeholder="Try some example blow！">
+                <small id="contentHelp" class="form-text text-muted">We'll never share your information with anyone else.</small>
+              </div>
+
+              <div class="form-group">
+                <label for="exampleFormControlSelect1">Content Type</label>
+                <select class="form-control" id="type-1-type" name="type">
+                  <option>All</option>
+                  <option>Poetry</option>
+		  <option>Lyrics</option>
+		</select>
+              </div>
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+      </div>
+
+      
+{% endblock %}

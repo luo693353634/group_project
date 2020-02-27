@@ -1,0 +1,27 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+
+        {% if 'title' in result %}
+
+            <h2 style="text-align:center;">{{result['title']}}</h2>
+            <h3 style="text-align:center;"><em>{{result['dynasty']}}</em></h3>
+            <h3 style="text-align:center;">{{result['author']}}</h3>
+
+            <p style="text-align:center; white-space: pre-line;">
+                {{result['content']}}
+            </p>
+        {% endif %}
+
+        {% if 'song_name' in result %}
+
+            <h2 style="text-align:center;">{{result['song_name']}}</h2>
+            <h3 style="text-align:center;"><em>{{result['album_name']}}</em></h3>
+            <h3 style="text-align:center;">{{result['artist_name']}}</h3>
+
+            <p style="text-align:center; white-space: pre-line;">
+                {{result['lyric']}}
+            </p>
+        {% endif %}
+
+{% endblock %}
