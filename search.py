@@ -156,10 +156,9 @@ def final_search(query, phrase, index, nameIndex, collectionIndex,
     return result
 
 
-def find_name(query):
+def find_name(query, names_id):
     name_score = dict()
     query = query.split()
-    names_id = load_pickle(names_id_vb_p[MODE])
     for item in query:
         name_score[item] = get_name_score(item, names_id)
     name_score = sort_dic_value(name_score)
@@ -187,7 +186,7 @@ if __name__ == '__main__':
 
     query = '明月 李白'
     input_big_dynasties = ['宋', '隋唐']
-    name = find_name(query)
+    name = find_name(query, names_id)
     query, phrase = preprocess_query(query)
     print('phrase: {}'.format(phrase))
     print('query: {}'.format(query))
