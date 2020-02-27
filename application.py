@@ -25,8 +25,8 @@ class SearchForm(Form):
     content = StringField('Content', [
         validators.Length(min=1, max=20, message=u'Search content should less than 20')
     ])
-
-    type = SelectField('Type', choices=[('Type 1', 'Type 1'), ('Type 2', 'Type 2')])
+    #type = SelectField('Type', choices=[('古代', '古代'), ('现代', '现代')])
+    type = SelectField('Type', choices=[('All', 'All'), ('Poetry', 'Poetry'), ('Lyrics', 'Lyrics')])
 
 
 index_for_search = load_pickle(pickle_index_p[MODE])  # load index
@@ -48,13 +48,15 @@ def search():
     form = SearchForm(request.form)
     if request.method == 'POST' and form.validate():
         global content
+        global c_type
         content = form.content.data
         c_type = form.type.data
+
         query, phrase = preprocess_query(content)
         result_list = final_search(query, phrase, index_for_search, tokens_id)
 
         search_result = []
-        if c_type == '古代':
+        if c_type == 'Poetry':
             for i in range(len(result_list)):
                 item = result_list[i]
                 data = mongo.db.song_poem.find_one({"_id": decode_vbyte(item)})
@@ -63,16 +65,36 @@ def search():
                     if len(search_result) >= 200:
                         break
         else:
-            if c_type == '现代':
+            if c_type == 'Lyrics':
                 for i in range(len(result_list)):
+                    item = result_list[i]
                     data = mongo.db.song_poem.find_one({"_id": decode_vbyte(item)})
                     if "album_name" in data:
                         search_result.append(data)
                         if len(search_result) >= 200:
                             break
+            else:
+                if c_type == 'All':
+                    for i in range(len(result_list)):
+                        item = result_list[i]
+                        data = mongo.db.song_poem.find_one({"_id": decode_vbyte(item)})
+                        search_result.append(data)
+                        if len(search_result) >= 200:
+                            break
+        #for i in range(len(result_list)):
+        #    item = result_list[i]
+        #    search_result.append(mongo.db.song_poem.find_one({"_id": decode_vbyte(item)}))
+            # if len(search_result) >= 3:
+            #     break
         global list_res
         list_res = search_result
 
+        #if c_type == 'All':
+        #    list_res = search_result
+        #elif c_type == 'Poerty':
+        #    list_res = [res for res in search_result if 'title' in res]
+        #elif c_type == 'Lyrics':
+        #    list_res = [res for res in search_result if 'song_name' in res]
     page, per_page, offset = get_page_args(page_parameter='page',
                                            per_page_parameter='per_page')
 
@@ -82,7 +104,7 @@ def search():
     pagination = Pagination(page=page, per_page=per_page, total=total,
                             css_framework='bootstrap4')
 
-    return render_template('search.html', content=content,
+    return render_template('search.html', content=content, c_type=c_type,
                            users=pagination_users,
                            page=page,
                            per_page=per_page,
@@ -96,7 +118,5 @@ def result(result_id):
 
 
 if __name__ == '__main__':
-    # app.run(debug=True, host='0.0.0.0',port=5000)
-    app.run(debug=True)
-
+    app.run(debug=True, host='0.0.0.0',port=5000)
 
