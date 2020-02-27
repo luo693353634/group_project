@@ -125,13 +125,25 @@ def search_query(query, index, token2id):
 def final_search(query, phrase, index, nameIndex, collectionIndex,
                  tokens_id, names_id, collection_id,
                  name='', input_big_dynasties=[]):
-    result1 = search_phrase(phrase, index, tokens_id)
-    result2 = search_query(query, index, tokens_id)  # do boolean search, get a list of doc No
 
     res_name = name_search(name, nameIndex, names_id)
     print('name_doc: {}'.format(len(res_name)))
     res_d = dynasty_search(input_big_dynasties, collectionIndex, collection_id)
     print('dynastiy_doc: {}'.format(len(res_d)))
+
+    if len(query) == 0 and len(phrase) == 0:  # query 为空
+        if len(name) and len(input_big_dynasties):
+            final_res = list(set(res_d) & set(res_name))
+        elif len(name):
+            final_res = res_name
+        elif len(input_big_dynasties):
+            final_res = res_d
+        else:
+            final_res = []
+        return final_res
+
+    result1 = search_phrase(phrase, index, tokens_id)
+    result2 = search_query(query, index, tokens_id)  # do boolean search, get a list of doc No
 
     # phrase search
     result = list(set(result1)&set(result2)) + list(set(result1).difference(set(result2)))  # all phrase search result
@@ -163,14 +175,20 @@ def final_search(query, phrase, index, nameIndex, collectionIndex,
 def find_name(query, names_id):
     name_score = dict()
     query = query.split()
-    for item in query:
-        name_score[item] = get_name_score(item, names_id)
-    name_score = sort_dic_value(name_score)
-    if name_score[0][1]:
-        name = name_score[0][0]
+    highest_score = 0
+    pos = -1
+    for i, item in enumerate(query):
+        score = get_name_score(item, names_id)
+        if score > highest_score:
+            highest_score = score
+            pos = i
+    if highest_score > 0:
+        name = query[pos]
+        query.pop(pos)
     else:
         name = ''
-    return name
+    query = ''.join(query)
+    return name, query
 
 
 if __name__ == '__main__':
@@ -181,7 +199,7 @@ if __name__ == '__main__':
     collection_id = load_pickle(collection_id_vb_p[MODE])
     query = '李白'
     input_big_dynasties = ['宋', '隋唐']
-    name = find_name(query, names_id)
+    name, query = find_name(query, names_id)
     query, phrase = preprocess_query(query)
     print('phrase: {}'.format(phrase))
     print('query: {}'.format(query))
