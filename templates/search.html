@@ -1,37 +1,37 @@
 {% extends 'layout.html' %}
 
 {% block body %}
-    <h1>Search Result <a href="/" class="btn btn-success">Return to Homepage</a></h1>
-    <h3>You searched {{ content }} in {{ c_type }}.</h3>
+    <h1>Search Result <a href="/" class="btn btn-success pull-right">Back To Homepage</a></h1>
+    <h3>You searched {{ content }}.</h3>
     <h4 style="display: none;" value="{{content}}"></h4>
     <hr>
 <div class="container">
-    {{ pagination.links }}
-<div class="table-responsive" id='table'>
+    <!-- {{ pagination.links }} -->
+<div class="table-responsive",id='table'>
     <table class="table table-striped table-hover">
 
         <tr>
-            <th>ID</th>
-            <th>Title</th>
-            <th>Dynasty/Album</th>
-            <th>Author/Artist</th>
-            <th>Content</th>
+            <th style='text-align: center;'>Rank 序号</th>
+            <th style='text-align: center;'>Title 歌名</th>
+            <th style='text-align: center;'>Album name / Dynasty 专辑/朝代</th>
+            <th style='text-align: center;'>Singer/Poet 歌手/诗人</th>
+            <th style='text-align: center;'>Content 诗歌词</th>
             <th></th>
         </tr>
             {% for result in users %}
 
                 <tr>
-                    <td>{{ loop.index + (page - 1) * per_page }}</td>
+                    <td style='text-align: center;'>{{ loop.index + (page - 1) * per_page }}</td>
                     {% if 'title' in result  %}
-                        <td>{{result['title']}}</td>
-                        <td>{{result['dynasty']}}</td>
-                        <td>{{result['author']}}</td>
+                        <td style='text-align: center;'>{{result['title']}}</td>
+                        <td style='text-align: center;'>{{result['dynasty']}}</td>
+                        <td style='text-align: center;'>{{result['author']}}</td>
                         <td class='cnt'>{{result['content'][:100]}}</td>
                     {% endif %}
                     {% if 'song_name' in result %}
-                        <td>{{result['song_name']}}</td>
-                        <td>{{result['album_name']}}</td>
-                        <td>{{result['artist_name']}}</td>
+                        <td style='text-align: center;'>{{result['song_name']}}</td>
+                        <td style='text-align: center;'>{{result['album_name']}}</td>
+                        <td style='text-align: center;'>{{result['artist_name']}}</td>
 			            <td class='cnt'>{{result['lyric'][:100]}}</td>
                     {% endif %}
                     <td><a href="result/{{result['_id']}}" class="btn btn-primary pull-right">View</a></td>
@@ -39,7 +39,10 @@
             {% endfor %}
     </table> 
     </div>
-    {{ pagination.links }}
+    <center>
+            {{ pagination.links }}
+    </center>
+
     </div>
     <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript">
@@ -49,7 +52,7 @@
         for (i = 0; i < len; i++) {
             re = new RegExp(words[i], 'g');
             if (re.test(text)) {
-                text = text.replace(re, '<'+ tag +' class="highlight" style="color: red;">$&</'+ tag +'>');
+                text = text.replace(re, '<'+ tag +' class="highlight" style="color: #DD4B39;">$&</'+ tag +'>');
             }
         }
         return text;
@@ -57,7 +60,7 @@
 
     $(function(){
     var td = $('.cnt');  
-    var words = $('h4').attr("value").replace(/(\s,|,\s)/g, ',').split('');
+    var words = $('h4').attr("value").replace(/(\s,|,\s|\s|[+——！，;：:。？、~@#￥%……&*（）]|[+\.\!\/_,$%^*()?;；：:-【】+\"\'])/g, ',').split('');
     //$td.html(highlight($td.html(), words) );
     td.each(function() {
         $(this).html(highlight($(this).html(), words));
